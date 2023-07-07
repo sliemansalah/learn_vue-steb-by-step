@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue cdn</title>
+</head>
+<body>
+    <input onkeyup="setName()" id="name" name="name" type="text" />
+    <p id="paragValue"></p>
+</body>
+</html>
+
+<script type="text/javascript">
+    function setName() {
+        let nameElem= document.getElementById('name');
+        let nameValue= nameElem.value;
+        let paragValue= document.getElementById('paragValue');
+        paragValue.innerText=nameValue;
+    }
+</script>

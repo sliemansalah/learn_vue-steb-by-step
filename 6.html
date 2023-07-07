@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue cdn</title>
+</head>
+<body>
+   <div id="app">
+      <p v-if="seen">show me</p>
+      <p v-else>no data return</p>
+      <button @click="seen=!seen">swap</button>
+   </div>
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script type="text/javascript">
+    var app = new Vue({
+  el: '#app',
+  data: {
+    seen: false,
+  }
+})
+</script>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>vue cdn</title>
+</head>
+<body>
+   <div id="app">
+    <h1 v-if="isEdit">تعديل</h1>
+    <h1 v-else>إضافة</h1>
+    <input @keydown.enter="saveData" v-model="listVal" placeholder="enter your list value" type="text">
+    <ol>
+      <li v-for="(todo, index) in todos">
+        {{ todo.text }} 
+        <i @click="editItem(todo, index)"  class="fas fa-pen editIcon"></i>
+        <i @click="removeItem(index)" class="fas fa-times crossIcon"></i>
+      </li>
+    </ol>
+
+    <button @click="clearData">تفريغ</button>
+   </div>
+</body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+<script type="text/javascript">
+    var app = new Vue({
+  el: '#app',
+  data: {
+    listVal: '',
+    todos: [],
+    isEdit: false,
+    editValue: '',
+  },
+  methods:{
+    saveData() {
+      let obj = {
+        text: this.listVal
+      }
+      if(this.isEdit) {
+        let index = this.todos.findIndex(todo => todo.text === this.editValue);
+        if (index !== -1) this.todos[index].text = obj.text;
+      }
+      else {
+        this.todos.push(obj);
+      }
+      //save to localstorage
+      this.saveLocalStorage();
+      this.listVal= '';
+      this.clearData();
+    },
+    removeItem(i) {
+      this.todos.splice(i,1);
+      this.saveLocalStorage();
+    },
+    editItem(obj, index){
+      this.isEdit= true;
+      this.editValue= obj.text;
+      this.listVal= this.editValue;
+    },
+    saveLocalStorage() {
+      localStorage.setItem('todos', JSON.stringify(this.todos));
+    },
+    clearData() {
+      this.isEdit= false;
+      this.listVal= '';
+    }
+  },
+  created(){
+    let todos= localStorage.getItem('todos') || [];
+    this.todos= JSON.parse(todos);
+  }
+})
+</script>
+
+<style>
+
+  .crossIcon, .editIcon {
+    cursor: pointer;
+    margin: 10px 5px;
+    font-size: 14px;
+  }
+  .crossIcon:hover{
+    color: red;
+  }
+  .editIcon:hover{
+    color: green;
+  }
+</style>
